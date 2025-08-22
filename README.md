@@ -1,16 +1,16 @@
-🌤️ HavaPenceresi
+## 🌤️ HavaPenceresi
 
 HavaPenceresi, Meteoroloji Genel Müdürlüğü (MGM) API’si üzerinden geçmiş ve gelecek tarihli hava durumu verilerini çeken basit bir Python uygulamasıdır.
 Kullanıcıdan kaç gün ileriye ve geriye bakmak istediğini sorar, verilen parametreye göre verileri çeker ve konsola yazdırır.
-🚀 Özellikler
 
+## 🚀 Özellikler
     Kullanıcıdan ileri ve geri gün sayısı alma
     MGM API üzerinden belirtilen tarih aralığında veri çekme
     JSON verilerini okunabilir formatta konsola yazdırma
     Hatalı parametre girişlerinde kullanıcıya anlamlı uyarılar
     Opsiyonel: JSON/CSV dışa aktarma, grafiksel çıktı
-
-📋 Yapılacaklar
+    
+## 📋 Yapılacaklar
 1. Proje Planlama
 
     Amacın netleştirilmesi: MGM API üzerinden geçmiş/gelecek hava durumu verilerini almak
