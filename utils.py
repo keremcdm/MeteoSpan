@@ -10,7 +10,7 @@ def get_city_or_plate(user_input):
         plate = f"{int(text):02d}"
         city = PLATE_TO_CITY.get(plate)
         if city is None:
-            raise ValueError("Geçersiz plaka kodu.")
+            raise ValueError("Invalid plate code.")
     else:
         # Find the city name regardless of upper/lower case
         city = None
@@ -19,7 +19,7 @@ def get_city_or_plate(user_input):
                 city = name
                 break
         if city is None:
-            raise ValueError("Geçersiz şehir adı.")
+            raise ValueError("Invalid city name.")
         plate = CITY_TO_PLATE[city]
 
     idx = CITY_INDEX[city]
@@ -34,7 +34,7 @@ def get_date(user_input: str):
         days = int(text)
         return days
     else:
-        raise ValueError("Geçersiz giriş! +N, -N veya 0 formatında giriniz.")
+        raise ValueError("Invalid input! Enter in the format +N, -N or 0.")
 
 
 def get_city_day_row(city_or_plate, day_offset, csv_path="turkey_weather.csv"):
@@ -45,7 +45,7 @@ def get_city_day_row(city_or_plate, day_offset, csv_path="turkey_weather.csv"):
     # Get the day offset
     offset = get_date(day_offset)
 
-    # Read the files and filter the list for the chosen city
+    # Read the file and filter the list for the chosen city
     df = pd.read_csv(csv_path, parse_dates=["date"])
     city_df = df[df["city"] == sel["city"]].sort_values("date").reset_index(drop=True)
 
@@ -54,7 +54,7 @@ def get_city_day_row(city_or_plate, day_offset, csv_path="turkey_weather.csv"):
     idx = center + offset
 
     if not (0 <= idx < len(city_df)):
-        raise ValueError(f"Seçtiğiniz gün sayısı aralık dışında. Geçerli: {-center}..{len(city_df)-1-center}")
+        raise ValueError(f"The selected day count is out of range. Valid: {-center}..{len(city_df)-1-center}")
     row = city_df.iloc[idx]
     return {
         "city": row["city"],
@@ -70,15 +70,15 @@ def get_city_day_report(city_or_plate, day_offset, csv_path="turkey_weather.csv"
 
     data = get_city_day_row(city_or_plate, day_offset, csv_path=csv_path)
 
-    # Getting a Turkish description from weather codes
+    # Getting an English description from weather codes
     code = data["weather_code"]
-    desc = WEATHER_CODES.get(code, f"Bilinmeyen kod {code}")
+    desc = WEATHER_CODES.get(code, f"Unknown code {code}")
 
     # Getting a descriptive text
     text = (
         f"{data['city']} ({data['plate']}) – {data['date']}\n"
-        f"Hava durumu: {desc}\n"
-        f"Ortalama: {data['t_mean']:.1f}°C  |  "
+        f"Weather: {desc}\n"
+        f"Average: {data['t_mean']:.1f}°C  |  "
         f"Min: {data['t_min']:.1f}°C  |  "
         f"Max: {data['t_max']:.1f}°C"
     )
